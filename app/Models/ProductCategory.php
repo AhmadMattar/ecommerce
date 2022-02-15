@@ -58,6 +58,10 @@ class ProductCategory extends Model
             ->get();
     }
 
+    /* product category has many products
+        this method represent this relation
+
+    */
     public function products()
     {
         return $this->hasMany(Product::class);

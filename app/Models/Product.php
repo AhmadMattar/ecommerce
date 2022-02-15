@@ -26,11 +26,17 @@ class Product extends Model
         ];
     }
 
+    /* this method represent the relation between productCategory & product
+        the prdouct has one category
+    */
     public function category()
     {
         return $this->belongsTo(ProductCategory::class, 'product_category_id', 'id');
     }
 
+    /* this method represent the relation between tags & product (many to many)
+        the prdouct has one category
+    */
     public function tags() :MorphToMany
     {
         return $this->morphToMany(Tag::class, 'taggable');
