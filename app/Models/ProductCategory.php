@@ -58,6 +58,11 @@ class ProductCategory extends Model
             ->get();
     }
 
+    public function status()
+    {
+        return $this->status ? 'Active' : 'Inactive';
+    }
+
     /* product category has many products
         this method represent this relation
 

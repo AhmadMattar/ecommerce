@@ -37,6 +37,7 @@ class ProductCategoryRequest extends FormRequest
             case 'PUT':
             {
                 return [
+                    //the name is unique except this category name (that i want to update it)
                     'name' => 'required|max:255|unique:product_categories,name,'.$this->route()->product_category->id,
                     'status' => 'required',
                     'parent_id' => 'nullable',

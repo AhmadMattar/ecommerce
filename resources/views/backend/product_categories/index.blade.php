@@ -5,12 +5,14 @@
     <div class="card-header py-3 d-flex">
         <h6 class="m-0 font-weight-bold text-primary">Product Categories</h6>
         <div class="ml-auto">
+            @ability('admin', 'create_product_categories')
             <a href="{{ route('admin.product_categories.create') }}" class="btn btn-primary">
                 <span class="icon text-white-50">
                     <i class="fas fa-plus"></i>
                 </span>
                 <span class="text">Add New Category</span>
             </a>
+            @endability
         </div>
     </div>
 
@@ -32,21 +34,24 @@
                 @forelse ($categories as $category)
                     <tr>
                         <td>{{$category->name}}</td>
-                        <td>{{$category->product_count}}</td>
+                        <td>{{$category->products_count}}</td>
+                        {{-- get the parent for the categories has a parent if has't print (-) --}}
                         <td>{{$category->parent != null ? $category->parent->name : '-' }}</td>
-                        <td>{{$category->status}}</td>
+                        <td>{{$category->status()}}</td>
                         <td>{{$category->created_at}}</td>
                         <td>
-                            <div class="btn-group btn-group-sm m-2">
-                                <a href="{{route('admin.product_categories.edit', $category->id)}}" class="btn btn-primary my-2 mr-1"><i class="fas fa-edit"></i></a>
-                                <form action="{{route('admin.product_categories.destroy', $category->id)}}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger my-2 ml-1" onclick="return confirm('Are you sure to delete this Category')">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </form>
+                            <div class="btn-group  btn-group-sm">
+                                <a href="{{route('admin.product_categories.edit', $category->id)}}" class="btn btn-primary"><i class="fas fa-edit"></i></a>
+                                <a href="javascript:void(0);"
+                                   onclick="if(confirm('Are you sure to delete this record?')) { document.getElementById('delete-product-category-{{$category->id}}').submit(); } else {return false;} "
+                                   class="btn btn-danger">
+                                   <i class="fas fa-trash"></i>
+                                </a>
                             </div>
+                            <form action="{{route('admin.product_categories.destroy', $category->id)}}" method="POST" id="delete-product-category-{{$category->id}}" class="d-none">
+                                @csrf
+                                @method('DELETE')
+                            </form>
                         </td>
                     </tr>
                 @empty

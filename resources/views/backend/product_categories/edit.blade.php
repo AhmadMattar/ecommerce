@@ -3,7 +3,7 @@
 
     <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex">
-            <h6 class="m-0 font-weight-bold text-primary">Edit Category</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Edit Category {{$productCategory->name}}</h6>
             <div class="ml-auto">
                 <a href="{{route('admin.product_categories.index')}}" class="btn btn-primary">
                     <span class="icon text-white-50">
@@ -14,14 +14,14 @@
             </div>
         </div>
         <div class="card-body">
-            <form action="{{ route('admin.product_categories.update',$category->id) }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('admin.product_categories.update', $productCategory->id) }}" method="post" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
                             <label for="name">Name</label>
-                            <input type="text" name="name" value="{{$category->name}}" class="form-control">
+                            <input type="text" name="name" value="{{old('name', $productCategory->name)}}" class="form-control">
                             @error('name') <span class="text-danger">{{$message}}</span> @enderror
                         </div>
                     </div>
@@ -30,7 +30,7 @@
                         <select name="parent_id" class="form-control">
                             <option value="">---</option>
                             @foreach ($main_categories as $main_category)
-                            <option value="{{$main_category->id}}" {{$category->parent_id == $main_category->id ? 'selected' : null}}>{{$main_category->name}}</option>
+                            <option value="{{$main_category->id}}" {{old('parent_id', $productCategory->parent_id) == $main_category->id ? 'selected' : null}}>{{$main_category->name}}</option>
                             @endforeach
                         </select>
                         @error('parent_id') <span class="text-danger">{{$message}}</span> @enderror
@@ -38,8 +38,8 @@
                     <div class="col-3">
                         <label for="status">Status</label>
                         <select name="status" class="form-control">
-                            <option value="1" {{$category->status == 1 ? 'selected' : null}}>Active</option>
-                            <option value="0" {{$category->status == 0 ? 'selected' : null}}>Inactive</option>
+                            <option value="1" {{$productCategory->status == 1 ? 'selected' : null}}>Active</option>
+                            <option value="0" {{$productCategory->status == 0 ? 'selected' : null}}>Inactive</option>
                         </select>
                         @error('status') <span class="text-danger">{{$message}}</span> @enderror
                     </div>
@@ -72,7 +72,21 @@
                showCancel: true,
                showRemove: false,
                showUpload: false,
-               overwriteInitial: false
+               overwriteInitial: false,
+               initialPreview: [
+                   "{{ asset('uploads/product_categories/'.$productCategory->cover) }}"
+               ],
+               initialPreviewAsData: true,
+               initialPreviewFileType: 'image',
+               initialPreviewConfig: [
+                    {
+                       caption: "{{ $productCategory->cover }}",
+                        size: '1111',
+                        width: "120px",
+                        url: "{{ route('admin.product_categories.remove_image', ['product_category_id' => $productCategory->id, '_token' => csrf_token()]) }}",
+                        key: {{ $productCategory->id }}
+                    }
+               ]
            });
         });
     </script>
