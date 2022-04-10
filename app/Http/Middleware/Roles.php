@@ -39,7 +39,7 @@ class Roles
         }
         //else(not logged in) do...
         else {
-            
+
             $routeDestination = in_array($route[0], $this->roleRoutes()) ? $route[0].'.login' : 'login';
             $path = $route[0] != '' ? $routeDestination : $this->userRoutes().'.index';
             return redirect()->route($path);

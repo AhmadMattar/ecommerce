@@ -2,13 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
+use Nicolaslopezj\Searchable\SearchableTrait;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
+
+use function PHPUnit\Framework\returnSelf;
 
 class Tag extends Model
 {
-    use HasFactory;
+    use HasFactory, Sluggable, SearchableTrait;
     protected $guarded = [];
 
     /**
@@ -23,6 +27,17 @@ class Tag extends Model
                 'source' => 'name'
             ]
         ];
+    }
+
+    protected $searchable = [
+        'columns' => [
+            'tags.name' => 10,
+        ],
+    ];
+
+    public function status()
+    {
+        return $this->status ? 'Active' : 'Inactive';
     }
 
     function products() :MorphToMany

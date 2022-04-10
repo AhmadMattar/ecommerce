@@ -64,7 +64,8 @@
                 <tr>
                     <td colspan="6">
                         <div class="float-right">
-                            {{$categories->links()}}
+                            {{-- appends(request()->all()): save the search results in the pagination --}}
+                            {{$categories->appends(request()->all())->links()}}
                         </div>
                     </td>
                 </tr>
