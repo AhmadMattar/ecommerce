@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -14,7 +15,22 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return view('backend.products.index');
+        // put the permission and role using "ability"
+        // if(!auth()->user()->ability('admin', 'manage_product_products, show_products')){
+        //     return redirect()->route('admin.index');
+        // }
+
+        $products = Product::with('category', 'tags', 'firstMedia')
+            //search in Products
+            ->when(request()->keyword != null, function ($query) {
+                $query->search(request()->keyword);
+            })
+            ->when(request()->status != null, function ($query) {
+                $query->whereStatus(request()->status);
+            })
+            ->orderBy(request()->sort_by ?? 'id', request()->order_by ?? 'desc')
+            ->paginate(request()->limit_by ?? 10);
+        return view('backend.products.index', compact('products'));
     }
 
     /**
