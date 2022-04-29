@@ -74,11 +74,14 @@
                showUpload: false,
                overwriteInitial: false,
                initialPreview: [
+                    @if ($productCategory->cover != '')
                    "{{ asset('uploads/product_categories/'.$productCategory->cover) }}"
+                   @endif
                ],
                initialPreviewAsData: true,
                initialPreviewFileType: 'image',
                initialPreviewConfig: [
+                    @if ($productCategory->cover != '')
                     {
                        caption: "{{ $productCategory->cover }}",
                         size: '1111',
@@ -86,6 +89,7 @@
                         url: "{{ route('admin.product_categories.remove_image', ['product_category_id' => $productCategory->id, '_token' => csrf_token()]) }}",
                         key: {{ $productCategory->id }}
                     }
+                    @endif
                ]
            });
         });
