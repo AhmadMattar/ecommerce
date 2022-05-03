@@ -129,6 +129,37 @@ class EntrustSeeder extends Seeder
         $displaySupervisor = Permission::create([ 'name' => 'display_supervisors', 'display_name' => 'Show Supervisor',    'route' => 'supervisors', 'module' => 'supervisors', 'as' => 'supervisors.show',    'icon' => null,   'parent' => $manageSupervisors->id, 'parent_original' => $manageSupervisors->id, 'parent_show' => $manageSupervisors->id, 'sidebar_link' => '1', 'appear' => '0',]);
         $updateSupervisor = Permission::create(['name' => 'update_supervisors',    'display_name' => 'Update Supervisor',  'route' => 'supervisors', 'module' => 'supervisors', 'as' => 'supervisors.edit',    'icon' => null,  'parent' => $manageSupervisors->id,'parent_original' => $manageSupervisors->id,'parent_show' => $manageSupervisors->id,'sidebar_link' => '1','appear' => '0',]);
         $delteSupervisor = Permission::create(['name' => 'delete_supervisors',     'display_name' => 'Delete Supervisor',  'route' => 'supervisors', 'module' => 'supervisors', 'as' => 'supervisors.destroy', 'icon' => null,   'parent' => $manageSupervisors->id,'parent_original' => $manageSupervisors->id,'parent_show' => $manageSupervisors->id,'sidebar_link' => '1','appear' => '0',]);
-        
+
+        //countries
+        $manageCountries = Permission::create(['name' => 'manage_countries', 'display_name' => 'Countries', 'route' => 'countries', 'module' => 'countries', 'as' => 'countries.index', 'icon' => 'fas fa-globe', 'parent' => '0', 'parent_original' => '0', 'sidebar_link' => '1', 'appear' => '1', 'ordering' => '40',]);
+        $manageCountries->parent_show = $manageCountries->id; $manageCountries->save();
+
+        $showCountry = Permission::create(['name' => 'show_countries', 'display_name' => 'Countries', 'route' => 'countries', 'module' => 'countries', 'as' => 'countries.index', 'icon' => 'fas fa-globe', 'parent' => $manageCountries->id, 'parent_original' => $manageCountries->id, 'parent_show' => $manageCountries->id, 'sidebar_link' => '1', 'appear' => '1',]);
+        $createCountry = Permission::create(['name' => 'create_countries',    'display_name' => 'Create Country',  'route' => 'countries', 'module' => 'countries', 'as' => 'countries.create',  'icon' => null, 'parent' => $manageCountries->id, 'parent_original' => $manageCountries->id, 'parent_show' => $manageCountries->id, 'sidebar_link' => '1', 'appear' => '0',]);
+        $displayCountry = Permission::create([ 'name' => 'display_countries', 'display_name' => 'Show Country',    'route' => 'countries', 'module' => 'countries', 'as' => 'countries.show',    'icon' => null,   'parent' => $manageCountries->id, 'parent_original' => $manageCountries->id, 'parent_show' => $manageCountries->id, 'sidebar_link' => '1', 'appear' => '0',]);
+        $updateCountry = Permission::create(['name' => 'update_countries',    'display_name' => 'Update Country',  'route' => 'countries', 'module' => 'countries', 'as' => 'countries.edit',    'icon' => null,  'parent' => $manageCountries->id,'parent_original' => $manageCountries->id,'parent_show' => $manageCountries->id,'sidebar_link' => '1','appear' => '0',]);
+        $delteCountry = Permission::create(['name' => 'delete_countries',     'display_name' => 'Delete Country',  'route' => 'countries', 'module' => 'countries', 'as' => 'countries.destroy', 'icon' => null,   'parent' => $manageCountries->id,'parent_original' => $manageCountries->id,'parent_show' => $manageCountries->id,'sidebar_link' => '1','appear' => '0',]);
+
+        //states
+        $manageStates = Permission::create(['name' => 'manage_states', 'display_name' => 'States', 'route' => 'states', 'module' => 'states', 'as' => 'states.index', 'icon' => 'fas fa-map-marker-alt', 'parent' => '0', 'parent_original' => '0', 'sidebar_link' => '1', 'appear' => '1', 'ordering' => '45',]);
+        $manageStates->parent_show = $manageStates->id; $manageStates->save();
+
+        $showState = Permission::create(['name' => 'show_states', 'display_name' => 'States', 'route' => 'states', 'module' => 'states', 'as' => 'states.index', 'icon' => 'fas fa-map-marker-alt', 'parent' => $manageStates->id, 'parent_original' => $manageStates->id, 'parent_show' => $manageStates->id, 'sidebar_link' => '1', 'appear' => '1',]);
+        $createState = Permission::create(['name' => 'create_states',    'display_name' => 'Create State',  'route' => 'states', 'module' => 'states', 'as' => 'states.create',  'icon' => null, 'parent' => $manageStates->id, 'parent_original' => $manageStates->id, 'parent_show' => $manageStates->id, 'sidebar_link' => '1', 'appear' => '0',]);
+        $displayState = Permission::create([ 'name' => 'display_states', 'display_name' => 'Show State',    'route' => 'states', 'module' => 'states', 'as' => 'states.show',    'icon' => null,   'parent' => $manageStates->id, 'parent_original' => $manageStates->id, 'parent_show' => $manageStates->id, 'sidebar_link' => '1', 'appear' => '0',]);
+        $updateState = Permission::create(['name' => 'update_states',    'display_name' => 'Update State',  'route' => 'states', 'module' => 'states', 'as' => 'states.edit',    'icon' => null,  'parent' => $manageStates->id,'parent_original' => $manageStates->id,'parent_show' => $manageStates->id,'sidebar_link' => '1','appear' => '0',]);
+        $delteState = Permission::create(['name' => 'delete_states',     'display_name' => 'Delete State',  'route' => 'states', 'module' => 'states', 'as' => 'states.destroy', 'icon' => null,   'parent' => $manageStates->id,'parent_original' => $manageStates->id,'parent_show' => $manageStates->id,'sidebar_link' => '1','appear' => '0',]);
+
+
+        //cities
+        $manageCities = Permission::create(['name' => 'manage_cities', 'display_name' => 'Cities', 'route' => 'cities', 'module' => 'cities', 'as' => 'cities.index', 'icon' => 'fas fa-city', 'parent' => '0', 'parent_original' => '0', 'sidebar_link' => '1', 'appear' => '1', 'ordering' => '50',]);
+        $manageCities->parent_show = $manageCities->id; $manageCities->save();
+
+        $showCity = Permission::create(['name' => 'show_cities', 'display_name' => 'Cities', 'route' => 'cities', 'module' => 'cities', 'as' => 'cities.index', 'icon' => 'fas fa-city', 'parent' => $manageCities->id, 'parent_original' => $manageCities->id, 'parent_show' => $manageCities->id, 'sidebar_link' => '1', 'appear' => '1',]);
+        $createCity = Permission::create(['name' => 'create_cities',    'display_name' => 'Create City',  'route' => 'cities', 'module' => 'cities', 'as' => 'cities.create',  'icon' => null, 'parent' => $manageCities->id, 'parent_original' => $manageCities->id, 'parent_show' => $manageCities->id, 'sidebar_link' => '1', 'appear' => '0',]);
+        $displayCity = Permission::create([ 'name' => 'display_cities', 'display_name' => 'Show City',    'route' => 'cities', 'module' => 'cities', 'as' => 'cities.show',    'icon' => null,   'parent' => $manageCities->id, 'parent_original' => $manageCities->id, 'parent_show' => $manageCities->id, 'sidebar_link' => '1', 'appear' => '0',]);
+        $updateCity = Permission::create(['name' => 'update_cities',    'display_name' => 'Update City',  'route' => 'cities', 'module' => 'cities', 'as' => 'cities.edit',    'icon' => null,  'parent' => $manageCities->id,'parent_original' => $manageCities->id,'parent_show' => $manageCities->id,'sidebar_link' => '1','appear' => '0',]);
+        $delteCity = Permission::create(['name' => 'delete_cities',     'display_name' => 'Delete City',  'route' => 'cities', 'module' => 'cities', 'as' => 'cities.destroy', 'icon' => null,   'parent' => $manageCities->id,'parent_original' => $manageCities->id,'parent_show' => $manageCities->id,'sidebar_link' => '1','appear' => '0',]);
+
     }
 }

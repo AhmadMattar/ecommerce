@@ -20,7 +20,7 @@ class TagController extends Controller
         if(!auth()->user()->ability('admin', 'manage_tags, show_tags')){
             return redirect()->route('admin.index');
         }
-        
+
         $tags = Tag::with('products')
             //search in Tags
             ->when(request()->keyword != null, function ($query) {
@@ -61,14 +61,10 @@ class TagController extends Controller
         }
 
         /*
-            $request->validate() this code mean that:
+            $request->validated() this code mean that:
                     insert all fields that i validate it at the validation time
         */
-        // Tag::create([$request->validate()]);
-        Tag::create([
-            'name' => $request->name,
-            'status' => $request->status
-        ]);
+        Tag::create($request->validated());
 
         return redirect()->route('admin.tags.index')->with([
             'message' => 'Created successfully',
@@ -139,7 +135,10 @@ class TagController extends Controller
      */
     public function destroy(Tag $tag)
     {
-
+        if(!auth()->user()->ability('admin', 'delete_tags')){
+            return redirect()->route('admin.index');
+        }
+        
         $tag->delete();
         return redirect()->route('admin.tags.index')->with([
             'message' => 'Deleted successfully',
