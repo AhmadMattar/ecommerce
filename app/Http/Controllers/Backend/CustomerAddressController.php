@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Backend\StateRequest;
+use App\Models\User;
 use App\Models\Country;
-use App\Models\State;
+use App\Models\UserAddress;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Backend\CustomerAddressRequest;
 
-class StateController extends Controller
+class CustomerAddressController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,20 +18,22 @@ class StateController extends Controller
      */
     public function index()
     {
-        if(!auth()->user()->ability('admin', 'manage_states, show_states')){
+        // put the permission and role using "ability"
+        if(!auth()->user()->ability('admin', 'manage_customer_addresses, show_customer_addresses')){
             return redirect()->route('admin.index');
         }
 
-        $states = State::with('cities')
+        $customer_addresses = UserAddress::with('user')
             ->when(request()->keyword != null, function ($query) {
                 $query->search(request()->keyword);
             })
             ->when(request()->status != null, function ($query) {
-                $query->whereStatus(request()->status);
+                $query->whereDefaultAddress(request()->status);
             })
             ->orderBy(request()->sort_by ?? 'id', request()->order_by ?? 'desc')
             ->paginate(request()->limit_by ?? 10);
-        return view('backend.states.index', compact('states'));
+
+        return view('backend.customer_addresses.index', compact('customer_addresses'));
     }
 
     /**
@@ -40,12 +43,12 @@ class StateController extends Controller
      */
     public function create()
     {
-        if(!auth()->user()->ability('admin', 'create_states')){
+        if(!auth()->user()->ability('admin', 'create_customer_addresses')){
             return redirect()->route('admin.index');
         }
 
-        $countries = Country::get(['id', 'name']);
-        return view('backend.states.create', compact('countries'));
+        $countries = Country::whereStatus(true)->get(['id', 'name']);
+        return view('backend.customer_addresses.create', compact('countries'));
     }
 
     /**
@@ -54,17 +57,17 @@ class StateController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StateRequest $request)
+    public function store(CustomerAddressRequest $request)
     {
-        if(!auth()->user()->ability('admin', 'create_states')){
+        if(!auth()->user()->ability('admin', 'create_customer_addresses')){
             return redirect()->route('admin.index');
         }
 
-        State::create($request->validated());
+        UserAddress::create($request->validated());
 
-        return redirect()->route('admin.states.index')->with([
+        return redirect()->route('admin.customer_addresses.index')->with([
             'message' => 'Created successfully',
-            'alert-type' => 'success',
+            'alert-type' => 'success'
         ]);
     }
 
@@ -74,12 +77,13 @@ class StateController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(State $state)
+    public function show(UserAddress $customer_address)
     {
-        if(!auth()->user()->ability('admin', 'display_states')){
+        if(!auth()->user()->ability('admin', 'display_customer_addresses')){
             return redirect()->route('admin.index');
         }
-        return view('backend.states.show', compact('state'));
+
+        return view('backend.customer_addresses.show', compact('customer_address'));
     }
 
     /**
@@ -88,14 +92,14 @@ class StateController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(State $state)
+    public function edit(UserAddress $customer_address)
     {
-        if(!auth()->user()->ability('admin', 'update_states')){
+        if(!auth()->user()->ability('admin', 'update_customer_addresses')){
             return redirect()->route('admin.index');
         }
 
-        $countries = Country::get(['id', 'name']);
-        return view('backend.states.edit', compact('state', 'countries'));
+        $countries = Country::whereStatus(true)->get(['id', 'name']);
+        return view('backend.customer_addresses.edit',compact('customer_address', 'countries'));
     }
 
     /**
@@ -105,18 +109,18 @@ class StateController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StateRequest $request, State $state)
+    public function update(CustomerAddressRequest $request, UserAddress $customer_address)
     {
-        if(!auth()->user()->ability('admin', 'update_states')){
+        if(!auth()->user()->ability('admin', 'update_customer_addresses')){
             return redirect()->route('admin.index');
         }
 
-        $state->update($request->validated());
-        return redirect()->route('admin.states.index')->with([
+        $customer_address->update($request->validated());
+
+        return redirect()->route('admin.customer_addresses.index')->with([
             'message' => 'Updated successfully',
             'alert-type' => 'success'
         ]);
-
     }
 
     /**
@@ -125,23 +129,16 @@ class StateController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(State $state)
+    public function destroy(UserAddress $customer_address)
     {
-        if(!auth()->user()->ability('admin', 'delete_states')){
+        if(!auth()->user()->ability('admin', 'delete_customer_addresses')){
             return redirect()->route('admin.index');
         }
 
-        $state->delete();
-        return redirect()->route('admin.states.index')->with([
+        $customer_address->delete();
+        return redirect()->route('admin.customer_addresses.index')->with([
             'message' => 'Deleted successfully',
             'alert-type' => 'danger'
         ]);
-    }
-
-    public function get_states(Request $request)
-    {
-        $states = State::whereCountryId($request->country_id)->whereStatus(true)->get(['id', 'name'])->toArray();
-
-        return response()->json($states);
     }
 }

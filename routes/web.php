@@ -3,17 +3,18 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\TagController;
-use App\Http\Controllers\Backend\BackendController;
 use App\Http\Controllers\Backend\CityController;
+use App\Http\Controllers\Backend\StateController;
+use App\Http\Controllers\Backend\BackendController;
 use App\Http\Controllers\Backend\CountryController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\CustomerController;
 use App\Http\Controllers\Frontend\FrontendController;
+use App\Http\Controllers\Backend\SupervisorController;
 use App\Http\Controllers\Backend\ProductCouponController;
 use App\Http\Controllers\Backend\ProductReviewController;
+use App\Http\Controllers\Backend\CustomerAddressController;
 use App\Http\Controllers\Backend\ProductCategoriesController;
-use App\Http\Controllers\Backend\StateController;
-use App\Http\Controllers\Backend\SupervisorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,13 +54,18 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::resource('product_reviews', ProductReviewController::class);
 
         Route::post('/customers/remove-image', [CustomerController::class, 'remove_image'])->name('customers.remove_image');
+        Route::get('/customers/get-customers', [CustomerController::class, 'get_customers'])->name('customers.get_customers');
         Route::resource('customers', CustomerController::class);
+
+        Route::resource('customer_addresses', CustomerAddressController::class);
 
         Route::post('/supervisors/remove-image', [SupervisorController::class, 'remove_image'])->name('supervisors.remove_image');
         Route::resource('supervisors', SupervisorController::class);
 
         Route::resource('countries', CountryController::class);
+        Route::get('/states/get-states', [StateController::class, 'get_states'])->name('states.get_states');
         Route::resource('states', StateController::class);
+        Route::get('/cities/get-cities', [CityController::class, 'get_cities'])->name('cities.get_cities');
         Route::resource('cities', CityController::class);
 
     });

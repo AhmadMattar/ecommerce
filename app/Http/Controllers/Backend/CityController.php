@@ -17,9 +17,9 @@ class CityController extends Controller
      */
     public function index()
     {
-        // if(!auth()->user()->ability('admin', 'manage_cities, show_cities')){
-        //     return redirect()->route('admin.index');
-        // }
+        if(!auth()->user()->ability('admin', 'manage_cities, show_cities')){
+            return redirect()->route('admin.index');
+        }
 
         $cities = City::query()
             ->when(request()->keyword != null, function ($query) {
@@ -40,9 +40,9 @@ class CityController extends Controller
      */
     public function create()
     {
-        // if(!auth()->user()->ability('admin', 'create_cities')){
-        //     return redirect()->route('admin.index');
-        // }
+        if(!auth()->user()->ability('admin', 'create_cities')){
+            return redirect()->route('admin.index');
+        }
 
         $states = State::get(['id', 'name']);
         return view('backend.cities.create', compact('states'));
@@ -56,9 +56,9 @@ class CityController extends Controller
      */
     public function store(CityRequest $request)
     {
-        // if(!auth()->user()->ability('admin', 'create_cities')){
-        //     return redirect()->route('admin.index');
-        // }
+        if(!auth()->user()->ability('admin', 'create_cities')){
+            return redirect()->route('admin.index');
+        }
 
         City::create($request->validated());
 
@@ -76,9 +76,9 @@ class CityController extends Controller
      */
     public function show(City $city)
     {
-        // if(!auth()->user()->ability('admin', 'display_cities')){
-        //     return redirect()->route('admin.index');
-        // }
+        if(!auth()->user()->ability('admin', 'display_cities')){
+            return redirect()->route('admin.index');
+        }
         return view('backend.cities.show', compact('city'));
     }
 
@@ -90,9 +90,9 @@ class CityController extends Controller
      */
     public function edit(City $city)
     {
-        // if(!auth()->user()->ability('admin', 'update_cities')){
-        //     return redirect()->route('admin.index');
-        // }
+        if(!auth()->user()->ability('admin', 'update_cities')){
+            return redirect()->route('admin.index');
+        }
 
         $states = State::get(['id', 'name']);
         return view('backend.cities.edit', compact('city', 'states'));
@@ -107,9 +107,9 @@ class CityController extends Controller
      */
     public function update(CityRequest $request, City $city)
     {
-        // if(!auth()->user()->ability('admin', 'update_cities')){
-        //     return redirect()->route('admin.index');
-        // }
+        if(!auth()->user()->ability('admin', 'update_cities')){
+            return redirect()->route('admin.index');
+        }
 
         $city->update($request->validated());
         return redirect()->route('admin.cities.index')->with([
@@ -126,14 +126,20 @@ class CityController extends Controller
      */
     public function destroy(City $city)
     {
-        // if(!auth()->user()->ability('admin', 'delete_cities')){
-        //     return redirect()->route('admin.index');
-        // }
+        if(!auth()->user()->ability('admin', 'delete_cities')){
+            return redirect()->route('admin.index');
+        }
 
         $city->delete();
         return redirect()->route('admin.cities.index')->with([
             'message' => 'Deleted successfully',
             'alert-type' => 'danger'
         ]);
+    }
+
+    public function get_cities(Request $request)
+    {
+        $cities = City::whereStateId($request->state_id)->whereStatus(true)->get(['id', 'name'])->toArray();
+        return response()->json($cities);
     }
 }

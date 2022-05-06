@@ -48,7 +48,7 @@ class CustomerController extends Controller
         if(!auth()->user()->ability('admin', 'create_customers')){
             return redirect()->route('admin.index');
         }
-        
+
         return view('backend.customers.create');
     }
 
@@ -202,5 +202,18 @@ class CustomerController extends Controller
             $customer->save();
         }
         return true;
+    }
+
+    public function get_customers()
+    {
+        $customers = User::whereHas('roles', function($query){
+            $query->where('name', 'customer');
+        })
+        ->when(request()->input('query' != ''), function($query){
+            $query->search(request()->input('query'));
+        })
+        ->get(['id', 'first_name', 'last_name', 'email'])->toArray();
+
+        return response()->json($customers);
     }
 }

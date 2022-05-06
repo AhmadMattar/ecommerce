@@ -30,4 +30,9 @@ class Country extends Model
     {
         return $this->status ? 'Active' : 'Inactive';
     }
+
+    public function addresses(): HasMany
+    {
+        return $this->hasMany(UserAddress::class);
+    }
 }

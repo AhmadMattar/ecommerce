@@ -17,9 +17,9 @@ class CountryController extends Controller
     public function index()
     {
         // put the permission and role using "ability"
-        // if(!auth()->user()->ability('admin', 'manage_countries, show_countries')){
-        //     return redirect()->route('admin.index');
-        // }
+        if(!auth()->user()->ability('admin', 'manage_countries, show_countries')){
+            return redirect()->route('admin.index');
+        }
 
         $countries = Country::with('states')
             ->when(request()->keyword != null, function ($query) {
@@ -40,9 +40,9 @@ class CountryController extends Controller
      */
     public function create()
     {
-        // if(!auth()->user()->ability('admin', 'create_countries')){
-        //     return redirect()->route('admin.index');
-        // }
+        if(!auth()->user()->ability('admin', 'create_countries')){
+            return redirect()->route('admin.index');
+        }
 
         return view('backend.countries.create');
     }
@@ -55,9 +55,9 @@ class CountryController extends Controller
      */
     public function store(CountryRequest $request)
     {
-        // if(!auth()->user()->ability('admin', 'create_countries')){
-        //     return redirect()->route('admin.index');
-        // }
+        if(!auth()->user()->ability('admin', 'create_countries')){
+            return redirect()->route('admin.index');
+        }
 
         Country::create($request->validated());
 
@@ -75,9 +75,9 @@ class CountryController extends Controller
      */
     public function show(Country $country)
     {
-        // if(!auth()->user()->ability('admin', 'dispaly_countries')){
-        //     return redirect()->route('admin.index');
-        // }
+        if(!auth()->user()->ability('admin', 'dispaly_countries')){
+            return redirect()->route('admin.index');
+        }
         return view('backend.countries.show', compact('country'));
     }
 
@@ -89,9 +89,9 @@ class CountryController extends Controller
      */
     public function edit(Country $country)
     {
-        // if(!auth()->user()->ability('admin', 'update_countries')){
-        //     return redirect()->route('admin.index');
-        // }
+        if(!auth()->user()->ability('admin', 'update_countries')){
+            return redirect()->route('admin.index');
+        }
 
         return view('backend.countries.edit', compact('country'));
     }
@@ -105,9 +105,9 @@ class CountryController extends Controller
      */
     public function update(CountryRequest $request, Country $country)
     {
-        // if(!auth()->user()->ability('admin', 'create_countries')){
-        //     return redirect()->route('admin.index');
-        // }
+        if(!auth()->user()->ability('admin', 'update_countries')){
+            return redirect()->route('admin.index');
+        }
 
         $country->update($request->validated());
 
@@ -125,9 +125,9 @@ class CountryController extends Controller
      */
     public function destroy(Country $country)
     {
-        // if(!auth()->user()->ability('admin', 'delete_countries')){
-        //     return redirect()->route('admin.index');
-        // }
+        if(!auth()->user()->ability('admin', 'delete_countries')){
+            return redirect()->route('admin.index');
+        }
         $country->delete();
 
         return redirect()->route('admin.countries.index')->with([
