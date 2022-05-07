@@ -1,0 +1,68 @@
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\Country;
+use App\Models\ShippingCompany;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
+
+class ShippingCompanySeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        Schema::disableForeignKeyConstraints();
+        DB::table('shipping_companies')->truncate();
+        DB::table('shipping_company_country')->truncate();
+        Schema::enableForeignKeyConstraints();
+
+        $sh01 = ShippingCompany::create([
+            'name'              => 'Qatar Inside',
+            'code'              => 'QAT',
+            'description'       => '8 - 10 days',
+            'fast'              => false,
+            'cost'              => '15.00',
+            'status'            => true,
+        ]);
+        $sh01->countries()->attach([179]);
+
+        $sh02 = ShippingCompany::create([
+            'name'              => 'Qatar Inside Speed Shipping',
+            'code'              => 'QAT-SPD',
+            'description'       => '1 - 3 days',
+            'fast'              => true,
+            'cost'              => '25.00',
+            'status'            => true,
+        ]);
+        $sh02->countries()->attach([179]);
+
+        $countriesIds = Country::where('id', '!=', 179)->pluck('id')->toArray();
+
+        $sh03 = ShippingCompany::create([
+            'name'              => 'Qatar Outside',
+            'code'              => 'QAT-O',
+            'description'       => '15 - 20 days',
+            'fast'              => false,
+            'cost'              => '50.00',
+            'status'            => true,
+        ]);
+        $sh03->countries()->attach($countriesIds);
+
+        $sh04 = ShippingCompany::create([
+            'name'              => 'Qatar Outside Speed Shipping',
+            'code'              => 'QAT-O-SPD',
+            'description'       => '5 - 10 days',
+            'fast'              => true,
+            'cost'              => '80.00',
+            'status'            => true,
+        ]);
+        $sh04->countries()->attach($countriesIds);
+
+    }
+}

@@ -14,6 +14,7 @@ use App\Http\Controllers\Backend\SupervisorController;
 use App\Http\Controllers\Backend\ProductCouponController;
 use App\Http\Controllers\Backend\ProductReviewController;
 use App\Http\Controllers\Backend\CustomerAddressController;
+use App\Http\Controllers\Backend\ShippingCompanyController;
 use App\Http\Controllers\Backend\ProductCategoriesController;
 
 /*
@@ -45,6 +46,12 @@ Route::prefix('admin')->name('admin.')->group(function(){
     Route::middleware(['roles', 'role:admin|SuperVisor'])->group(function () {
         Route::get('/',[BackendController::class,'index'])->name('index_route');
         Route::get('/index',[BackendController::class,'index'])->name('index');
+        Route::get('/account_settings',[BackendController::class,'account_settings'])->name('account_settings');
+        Route::post('/remove-image', [BackendController::class, 'remove_image'])->name('remove_image');
+        Route::put('/account_settings',[BackendController::class,'update_account_settings'])->name('update_account_settings');
+
+
+
         Route::post('/product_categories/remove-image', [ProductCategoriesController::class, 'remove_image'])->name('product_categories.remove_image');
         Route::resource('product_categories', ProductCategoriesController::class);
         Route::post('/products/remove-image', [ProductController::class, 'remove_image'])->name('products.remove_image');
@@ -67,6 +74,8 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::resource('states', StateController::class);
         Route::get('/cities/get-cities', [CityController::class, 'get_cities'])->name('cities.get_cities');
         Route::resource('cities', CityController::class);
+
+        Route::resource('shipping_companies', ShippingCompanyController::class);
 
     });
 

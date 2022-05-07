@@ -28,13 +28,13 @@ class EntrustSeeder extends Seeder
         $customerRole = Role::create([ 'name'  => 'customer', 'display_name' => 'Customer', 'description' => 'Customer', 'allowed_route' => NULL ]);
 
         // Create Users
-        $admin = User::create([ 'first_name'  => 'Admin', 'last_name' =>  'System', 'username' =>  'admin', 'email' => 'admin@ecommerce.test', 'email_verified_at' => now(), 'mobile' => '972598906699', 'user_image' => 'avatar.svg', 'status' => 1, 'password' => bcrypt('123456789'), 'remember_token' => Str::random(10), ]);
+        $admin = User::create([ 'first_name'  => 'Admin', 'last_name' =>  'System', 'username' =>  'admin', 'email' => 'admin@ecommerce.test', 'email_verified_at' => now(), 'mobile' => '972598906699', 'user_image' => '', 'status' => 1, 'password' => bcrypt('123456789'), 'remember_token' => Str::random(10), ]);
         $admin->attachRole($adminRole);
 
-        $superVisor = User::create([ 'first_name'  => 'SuperVisor', 'last_name' =>  'System', 'username' =>  'superVisor', 'email' => 'superVisor@ecommerce.test', 'email_verified_at' => now(), 'mobile' => '972598916699', 'user_image' => 'avatar.svg', 'status' => 1, 'password' => bcrypt('123456789'), 'remember_token' => Str::random(10), ]);
+        $superVisor = User::create([ 'first_name'  => 'SuperVisor', 'last_name' =>  'System', 'username' =>  'superVisor', 'email' => 'superVisor@ecommerce.test', 'email_verified_at' => now(), 'mobile' => '972598916699', 'user_image' => '', 'status' => 1, 'password' => bcrypt('123456789'), 'remember_token' => Str::random(10), ]);
         $superVisor->attachRole($superVisorRole);
 
-        $customer = User::create([ 'first_name'  => 'Ahmed', 'last_name' =>  'Mattar', 'username' =>  'ahmed', 'email' => 'ahmed@gmail.com', 'email_verified_at' => now(), 'mobile' => '972598926699', 'user_image' => 'avatar.svg', 'status' => 1, 'password' => bcrypt('123456789'), 'remember_token' => Str::random(10), ]);
+        $customer = User::create([ 'first_name'  => 'Ahmed', 'last_name' =>  'Mattar', 'username' =>  'ahmed', 'email' => 'ahmed@gmail.com', 'email_verified_at' => now(), 'mobile' => '972598926699', 'user_image' => '', 'status' => 1, 'password' => bcrypt('123456789'), 'remember_token' => Str::random(10), ]);
         $customer->attachRole($customerRole);
 
         for ($i = 0; $i < 21; $i++) {
@@ -170,6 +170,16 @@ class EntrustSeeder extends Seeder
         $displayCity = Permission::create([ 'name' => 'display_cities', 'display_name' => 'Show City',    'route' => 'cities', 'module' => 'cities', 'as' => 'cities.show',    'icon' => null,   'parent' => $manageCities->id, 'parent_original' => $manageCities->id, 'parent_show' => $manageCities->id, 'sidebar_link' => '1', 'appear' => '0',]);
         $updateCity = Permission::create(['name' => 'update_cities',    'display_name' => 'Update City',  'route' => 'cities', 'module' => 'cities', 'as' => 'cities.edit',    'icon' => null,  'parent' => $manageCities->id,'parent_original' => $manageCities->id,'parent_show' => $manageCities->id,'sidebar_link' => '1','appear' => '0',]);
         $delteCity = Permission::create(['name' => 'delete_cities',     'display_name' => 'Delete City',  'route' => 'cities', 'module' => 'cities', 'as' => 'cities.destroy', 'icon' => null,   'parent' => $manageCities->id,'parent_original' => $manageCities->id,'parent_show' => $manageCities->id,'sidebar_link' => '1','appear' => '0',]);
+
+        //shipping companies
+        $manageShippingCompanies = Permission::create(['name' => 'manage_shipping_companies', 'display_name' => 'ShippingCompanies', 'route' => 'shipping_companies', 'module' => 'shipping_companies', 'as' => 'shipping_companies.index', 'icon' => 'fas fa-truck', 'parent' => '0', 'parent_original' => '0', 'sidebar_link' => '1', 'appear' => '1', 'ordering' => '90',]);
+        $manageShippingCompanies->parent_show = $manageShippingCompanies->id; $manageShippingCompanies->save();
+
+        $showShippingCompany = Permission::create(['name' => 'show_shipping_companies', 'display_name' => 'ShippingCompanies', 'route' => 'shipping_companies', 'module' => 'shipping_companies', 'as' => 'shipping_companies.index', 'icon' => 'fas fa-truck', 'parent' => $manageShippingCompanies->id, 'parent_original' => $manageShippingCompanies->id, 'parent_show' => $manageShippingCompanies->id, 'sidebar_link' => '1', 'appear' => '1',]);
+        $createShippingCompany = Permission::create(['name' => 'create_shipping_companies',    'display_name' => 'Create Shipping Company',  'route' => 'shipping_companies', 'module' => 'shipping_companies', 'as' => 'shipping_companies.create',  'icon' => null, 'parent' => $manageShippingCompanies->id, 'parent_original' => $manageShippingCompanies->id, 'parent_show' => $manageShippingCompanies->id, 'sidebar_link' => '1', 'appear' => '0',]);
+        $displayShippingCompany = Permission::create([ 'name' => 'display_shipping_companies', 'display_name' => 'Show Shipping Company',    'route' => 'shipping_companies', 'module' => 'shipping_companies', 'as' => 'shipping_companies.show',    'icon' => null,   'parent' => $manageShippingCompanies->id, 'parent_original' => $manageShippingCompanies->id, 'parent_show' => $manageShippingCompanies->id, 'sidebar_link' => '1', 'appear' => '0',]);
+        $updateShippingCompany = Permission::create(['name' => 'update_shipping_companies',    'display_name' => 'Update Shipping Company',  'route' => 'shipping_companies', 'module' => 'shipping_companies', 'as' => 'shipping_companies.edit',    'icon' => null,  'parent' => $manageShippingCompanies->id,'parent_original' => $manageShippingCompanies->id,'parent_show' => $manageShippingCompanies->id,'sidebar_link' => '1','appear' => '0',]);
+        $delteShippingCompany = Permission::create(['name' => 'delete_shipping_companies',     'display_name' => 'Delete Shipping Company',  'route' => 'shipping_companies', 'module' => 'shipping_companies', 'as' => 'shipping_companies.destroy', 'icon' => null,   'parent' => $manageShippingCompanies->id,'parent_original' => $manageShippingCompanies->id,'parent_show' => $manageShippingCompanies->id,'sidebar_link' => '1','appear' => '0',]);
 
     }
 }
