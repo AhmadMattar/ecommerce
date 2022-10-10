@@ -15,13 +15,13 @@
               <!-- Link--><a class="nav-link {{request()->routeIs('frontend.shop') ? 'active' : ''}}" href="{{route('frontend.shop')}}">Shop</a>
             </li>
             <li class="nav-item">
-              <!-- Link--><a class="nav-link {{request()->routeIs('frontend.detail') ? 'active' : ''}}" href="{{route('frontend.detail')}}">Product detail</a>
+              <!-- Link--><a class="nav-link {{request()->routeIs('frontend.product') ? 'active' : ''}}" href="{{route('frontend.product')}}">Product detail</a>
             </li>
             <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" id="pagesDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pages</a>
                 <div class="dropdown-menu mt-3" aria-labelledby="pagesDropdown">
                     <a class="dropdown-item border-0 transition-link {{request()->routeIs('frontend.index') ? 'active' : ''}}" href="{{route('frontend.index')}}">Homepage</a>
                     <a class="dropdown-item border-0 transition-link {{request()->routeIs('frontend.shop') ? 'active' : ''}}" href="{{route('frontend.shop')}}">Category</a>
-                    <a class="dropdown-item border-0 transition-link {{request()->routeIs('frontend.detail') ? 'active' : ''}}" href="{{route('frontend.detail')}}">Product detail</a>
+                    <a class="dropdown-item border-0 transition-link {{request()->routeIs('frontend.product') ? 'active' : ''}}" href="{{route('frontend.product')}}">Product detail</a>
                     <a class="dropdown-item border-0 transition-link {{request()->routeIs('frontend.cart') ? 'active' : ''}}" href="{{route('frontend.cart')}}">Shopping cart</a>
                     <a class="dropdown-item border-0 transition-link {{request()->routeIs('frontend.checkout') ? 'active' : ''}}" href="{{route('frontend.checkout')}}">Checkout</a>
                 </div>

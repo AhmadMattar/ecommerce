@@ -36,6 +36,29 @@ class Product extends Model
             'products.description' => 10,
         ],
     ];
+    // start scopes fun's
+    public function scopeFeatured($query)
+    {
+        return $query->whereFeatured(1);
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->whereStatus(1);
+    }
+
+    public function scopeActiveCategory($query)
+    {
+        return $query->whereHas('category', function($query1){
+            $query1->whereStatus(1);
+        });
+    }
+
+    public function scopeHasQuantity($query)
+    {
+        return $query->where('quantity', '>', 0);
+    }
+    //end scopes
 
     public function status()
     {

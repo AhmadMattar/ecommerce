@@ -11,11 +11,14 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "intervention/image": "^2.7",
         "intervention/imagecache": "^2.5",
+        "jantinnerezo/livewire-alert": "^2.2",
         "laravel/framework": "^8.54",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.3",
+        "livewire/livewire": "^2.10",
         "mindscms/entrust": "^2.5",
+        "mindscms/laravelshoppingcart": "^2.0",
         "nicolaslopezj/searchable": "^1.13",
         "predis/predis": "^1.1"
     },
@@ -46,7 +49,8 @@
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
+            "@php artisan package:discover --ansi",
+            "@php artisan vendor:publish --force --tag=livewire:assets --ansi"
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi"

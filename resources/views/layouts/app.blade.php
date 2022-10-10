@@ -28,24 +28,25 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <!-- Lightbox-->
-    <link rel="stylesheet" href="{{asset('front-end/vendor/lightbox2/css/lightbox.min.css')}}">
+    <link rel="stylesheet" href="{{asset('frontend/vendor/lightbox2/css/lightbox.min.css')}}">
     <!-- Range slider-->
-    <link rel="stylesheet" href="{{asset('front-end/vendor/nouislider/nouislider.min.css')}}">
+    <link rel="stylesheet" href="{{asset('frontend/vendor/nouislider/nouislider.min.css')}}">
     <!-- Bootstrap select-->
-    <link rel="stylesheet" href="{{asset('front-end/vendor/bootstrap-select/css/bootstrap-select.min.css')}}">
+    <link rel="stylesheet" href="{{asset('frontend/vendor/bootstrap-select/css/bootstrap-select.min.css')}}">
     <!-- Owl Carousel-->
-    <link rel="stylesheet" href="{{asset('front-end/vendor/owl.carousel2/assets/owl.carousel.min.css')}}">
-    <link rel="stylesheet" href="{{asset('front-end/vendor/owl.carousel2/assets/owl.theme.default.css')}}">
+    <link rel="stylesheet" href="{{asset('frontend/vendor/owl.carousel2/assets/owl.carousel.min.css')}}">
+    <link rel="stylesheet" href="{{asset('frontend/vendor/owl.carousel2/assets/owl.theme.default.css')}}">
     <!-- theme stylesheet-->
-    <link rel="stylesheet" href="{{asset('front-end/css/style.default.css')}}" id="theme-stylesheet">
+    <link rel="stylesheet" href="{{asset('frontend/css/style.default.css')}}" id="theme-stylesheet">
     <!-- Custom stylesheet - for your changes-->
-    <link rel="stylesheet" href="{{asset('front-end/css/custom.css')}}">
+    <link rel="stylesheet" href="{{asset('frontend/css/custom.css')}}">
 
     {{-- <!-- Tweaks for older IEs--><!--[if lt IE 9]> --}}
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     {{-- <![endif]--> --}}
-
+    <livewire:styles />
+    @yield('style')
 </head>
 <body>
     <div id="app" class="page-holder {{request()->routeIs('frontend.detail') ? 'bg-light' : ''}}">
@@ -56,19 +57,17 @@
             @yield('content')
         </div>
         @include('partiacl.frontend.footer')
-
-
     </div>
-    @include('partiacl.frontend.modal')
+    <livewire:frontend.product-modal-shared />
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
     <!-- JavaScript files-->
-    <script src="{{asset('front-end/vendor/lightbox2/js/lightbox.min.js')}}"></script>
-    <script src="{{asset('front-end/vendor/nouislider/nouislider.min.js')}}"></script>
-    <script src="{{asset('front-end/vendor/bootstrap-select/js/bootstrap-select.min.js')}}"></script>
-    <script src="{{asset('front-end/vendor/owl.carousel2/owl.carousel.min.js')}}"></script>
-    <script src="{{asset('front-end/vendor/owl.carousel2.thumbs/owl.carousel2.thumbs.min.js')}}"></script>
-    <script src="{{asset('front-end/js/front.js')}}"></script>
+    <script src="{{asset('frontend/vendor/lightbox2/js/lightbox.min.js')}}"></script>
+    <script src="{{asset('frontend/vendor/nouislider/nouislider.min.js')}}"></script>
+    <script src="{{asset('frontend/vendor/bootstrap-select/js/bootstrap-select.min.js')}}"></script>
+    <script src="{{asset('frontend/vendor/owl.carousel2/owl.carousel.min.js')}}"></script>
+    <script src="{{asset('frontend/vendor/owl.carousel2.thumbs/owl.carousel2.thumbs.min.js')}}"></script>
+    <script src="{{asset('frontend/js/front.js')}}"></script>
     <script>
       // ------------------------------------------------------- //
       //   Inject SVG Sprite -
@@ -94,6 +93,9 @@
       injectSvgSprite('https://bootstraptemple.com/files/icons/orion-svg-sprite.svg');
 
     </script>
-
+    <livewire:scripts />
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <x-livewire-alert::scripts />
+    @yield('script')
 </body>
 </html>

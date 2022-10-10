@@ -5,9 +5,9 @@
             <div class="modal-body p-0">
                 <div class="row align-items-stretch">
                     <div class="col-lg-6 p-lg-0">
-                        <a class="product-view d-block h-100 bg-cover bg-center" style="background: url({{asset('front-end/img/product-5.jpg')}})" href="{{asset('front-end/img/product-5.jpg')}}" data-lightbox="productview" title="Red digital smartwatch"></a>
-                        <a class="d-none" href="{{asset('front-end/img/product-5-alt-1.jpg')}}" title="Red digital smartwatch" data-lightbox="productview"></a>
-                        <a class="d-none" href="{{asset('front-end/img/product-5-alt-2.jpg')}}" title="Red digital smartwatch" data-lightbox="productview"></a>
+                        <a class="product-view d-block h-100 bg-cover bg-center" style="background: url({{asset('frontend/img/product-5.jpg')}})" href="{{asset('frontend/img/product-5.jpg')}}" data-lightbox="productview" title="Red digital smartwatch"></a>
+                        <a class="d-none" href="{{asset('frontend/img/product-5-alt-1.jpg')}}" title="Red digital smartwatch" data-lightbox="productview"></a>
+                        <a class="d-none" href="{{asset('frontend/img/product-5-alt-2.jpg')}}" title="Red digital smartwatch" data-lightbox="productview"></a>
                     </div>
                     <div class="col-lg-6">
                         <button class="close p-4" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
