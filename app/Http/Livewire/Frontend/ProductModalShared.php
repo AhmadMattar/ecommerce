@@ -55,6 +55,7 @@ class ProductModalShared extends Component
         } else {
             Cart::instance('default')->add($this->productModal->id, $this->productModal->name, $this->quantity, $this->productModal->price)->associate(Product::class);
             $this->quantity = 1;
+            $this->emit('updateCart');
             $this->alert('success', 'Product added to your cart successfully.', $this->optionsAlert);
         }
     }
@@ -69,6 +70,7 @@ class ProductModalShared extends Component
             $this->alert('error', 'This product already exists!', $this->optionsAlert);
         } else {
             Cart::instance('wishList')->add($this->productModal->id, $this->productModal->name, 1, $this->productModal->price)->associate(Product::class);
+            $this->emit('updateCart');
             $this->alert('success', 'Product added to your wishlist cart successfully.', $this->optionsAlert);
         }
     }

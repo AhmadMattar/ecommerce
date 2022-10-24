@@ -1,5 +1,7 @@
 <?php
 // General Helper
+
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Cache;
 
 // get the parent show page
@@ -26,4 +28,33 @@ function getParentIdOf($parameter){
     $route = str_replace('admin.', '', $parameter);
     $permission = Cache::get('admin_side_menu')->where('as',$route)->first();
     return $permission ? $permission->id : null;
+}
+
+function getNumbers()
+{
+    $subtotal = Cart::instance('default')->subtotal();
+    $discount = session()->has('coupon') ? session()->get('coupon')['discount'] : 0.00;
+
+    $subtotalAfterDicount = $subtotal - $discount;
+
+    $tax = config('cart.tax') / 100;
+    $taxText = config('cart.tax') . '%';
+
+    $productTaxes = round($subtotalAfterDicount * $tax, 2);
+    $newSubtotal = $subtotalAfterDicount + $productTaxes;
+
+    $shipping = session()->has('shipping') ? session()->get('shipping')['cost'] : 0.00;
+
+    $total = ($newSubtotal + $shipping) > 0 ? round($newSubtotal + $shipping, 2) : 0.00;
+
+    return collect([
+        'subtotal' => $subtotal,
+        'discount' => (float) $discount,
+        'tax' => $tax,
+        'taxText' => $taxText,
+        'productTaxes' => (float) $productTaxes,
+        'newSubtotal' => (float) $newSubtotal,
+        'shipping' => (float) $shipping,
+        'total' => (float) $total,
+    ]);
 }

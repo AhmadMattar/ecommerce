@@ -28,8 +28,7 @@
             </li>
           </ul>
           <ul class="navbar-nav ml-auto">
-                <li class="nav-item"><a class="nav-link {{request()->routeIs('frontend.cart') ? 'active' : ''}}" href="{{route('frontend.cart')}}"> <i class="fas fa-dolly-flatbed mr-1 text-gray"></i>Cart<small class="text-gray">(2)</small></a></li>
-                <li class="nav-item"><a class="nav-link" href="#"> <i class="far fa-heart mr-1"></i><small class="text-gray"> (0)</small></a></li>
+                <livewire:frontend.carts />
 
                 {{-- if the user havn't account return him to the login page --}}
                 @guest

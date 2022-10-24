@@ -44,6 +44,7 @@ class ShowProduct extends Component
         } else {
             Cart::instance('default')->add($this->product->id, $this->product->name, $this->quantity, $this->product->price)->associate(Product::class);
             $this->quantity = 1;
+            $this->emit('updateCart');
             $this->alert('success', 'Product added to your cart successfully.', $this->optionsAlert);
         }
     }
@@ -58,6 +59,7 @@ class ShowProduct extends Component
             $this->alert('error', 'This product already exists!', $this->optionsAlert);
         } else {
             Cart::instance('wishList')->add($this->product->id, $this->product->name, 1, $this->product->price)->associate(Product::class);
+            $this->emit('updateCart');
             $this->alert('success', 'Product added to your wishlist cart successfully.', $this->optionsAlert);
         }
     }

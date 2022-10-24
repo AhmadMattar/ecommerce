@@ -14,8 +14,10 @@ use App\Http\Controllers\Backend\SupervisorController;
 use App\Http\Controllers\Backend\ProductCouponController;
 use App\Http\Controllers\Backend\ProductReviewController;
 use App\Http\Controllers\Backend\CustomerAddressController;
+use App\Http\Controllers\Backend\PaymentMethodController;
 use App\Http\Controllers\Backend\ShippingCompanyController;
 use App\Http\Controllers\Backend\ProductCategoriesController;
+use App\Http\Controllers\Frontend\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,12 +32,16 @@ use App\Http\Controllers\Backend\ProductCategoriesController;
 Route::prefix('')->group(function(){
     Route::get('/',[FrontendController::class,'index'])->name('frontend.index');
     Route::get('/cart',[FrontendController::class,'cart'])->name('frontend.cart');
-    Route::get('/checkout',[FrontendController::class,'checkout'])->name('frontend.checkout');
+    Route::get('/wishlist',[FrontendController::class,'wishlist'])->name('frontend.wishlist');
     Route::get('/product/{slug?}',[FrontendController::class,'product'])->name('frontend.product');
     Route::get('/shop/{slug?}',[FrontendController::class,'shop'])->name('frontend.shop');
     Route::get('/shop/tags/{slug}',[FrontendController::class,'shop_tag'])->name('frontend.shop_tag');
 });
 
+Route::middleware(['roles', 'role:customer'])->group(function(){
+    Route::get('/checkout',[FrontendController::class, 'checkout'])->name('frontend.checkout');
+    Route::post('/checkout',[PaymentController::class, 'checkout_now'])->name('frontend.checkout.payment');
+});
 Route::prefix('admin')->name('admin.')->group(function(){
     //guest middleware
     Route::middleware(['guest'])->group(function () {
@@ -77,6 +83,8 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::resource('cities', CityController::class);
 
         Route::resource('shipping_companies', ShippingCompanyController::class);
+
+        Route::resource('payment_methods', PaymentMethodController::class);
 
     });
 

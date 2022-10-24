@@ -20,6 +20,11 @@ class FrontendController extends Controller
         return view('frontend.cart');
     }
 
+    public function wishlist()
+    {
+        return view('frontend.wishlist');
+    }
+
     public function checkout()
     {
         return view('frontend.checkout');

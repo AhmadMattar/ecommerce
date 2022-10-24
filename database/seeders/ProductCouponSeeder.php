@@ -16,13 +16,13 @@ class ProductCouponSeeder extends Seeder
     public function run()
     {
         ProductCoupon::create([
-            'code'          => 'SAMI200',
+            'code'          => 'AHMED200',
             'type'          => 'fixed',
             'value'         => 200,
             'description'   => 'Discount 200 SAR on your sales on website',
             'use_times'     => 20,
             'start_date'    => Carbon::now(),
-            'expire_date'   => Carbon::now(),
+            'expire_date'   => Carbon::now()->addMonth(),
             'greater_than'  => 600,
             'status'        => 1,
         ]);
