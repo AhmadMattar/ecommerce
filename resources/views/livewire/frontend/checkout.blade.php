@@ -72,11 +72,11 @@
             @if (Str::lower($payment_method_code) == 'ppex')
                 <form action="{{ route('frontend.checkout.payment') }}" method="post">
                     @csrf
-                    <input type="text" name="customer_address_id" value="{{ old('customer_address_id', $customer_address_id) }}">
-                    <input type="text" name="shipping_company_id" value="{{ old('shipping_company_id', $shipping_company_id) }}">
-                    <input type="text" name="payment_method_id" value="{{ old('payment_method_id', $payment_method_id) }}">
+                    <input type="hidden" name="customer_address_id" value="{{ old('customer_address_id', $customer_address_id) }}">
+                    <input type="hidden" name="shipping_company_id" value="{{ old('shipping_company_id', $shipping_company_id) }}">
+                    <input type="hidden" name="payment_method_id" value="{{ old('payment_method_id', $payment_method_id) }}">
 
-                    <button type="submit"> continue checkout with PayPal</button>
+                    <button type="submit" class="btn btn-dark btn-sm btn-block"> continue checkout with PayPal</button>
                 </form>
             @endif
         @endif

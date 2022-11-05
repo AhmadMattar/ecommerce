@@ -12,7 +12,7 @@ class FeaturedProduct extends Component
     use LivewireAlert;
 
     protected $optionsAlert = [
-        'timer' => 5000,
+        'timer' => 2000,
         'timerProgressBar' => true,
     ];
 

@@ -17,7 +17,7 @@
 
             <form action="{{ route('admin.payment_methods.update', $payment_method->id) }}" method="post">
                 @csrf
-                @method('PATCH')
+                @method('PUT')
                 <div class="row">
                     <div class="col-3">
                         <div class="form-group">
@@ -86,7 +86,7 @@
                     <div class="col-12">
                         <div class="form-group">
                             <label for="sandbox_merchant_email">Sandbox Merchant Email</label>
-                            <input type="text" name="sandbox_merchant_email" value="{{ old('sandbox_merchant_email', $payment_method->sandbox_merchant_email) }}" class="form-control">
+                            <input type="text" name="sandbox_merchant_email" value="{{ old('sandbox_merchant_email', $payment_method->sandbox_username) }}" class="form-control">
                             @error('sandbox_merchant_email')<span class="text-danger">{{ $message }}</span>@enderror
                         </div>
                     </div>
@@ -96,14 +96,14 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label for="sandbox_client_id">Sandbox client id</label>
-                            <input type="text" name="sandbox_client_id" value="{{ old('sandbox_client_id', $payment_method->sandbox_client_id) }}" class="form-control">
+                            <input type="text" name="sandbox_client_id" value="{{ old('sandbox_client_id', $payment_method->sandbox_password) }}" class="form-control">
                             @error('sandbox_client_id')<span class="text-danger">{{ $message }}</span>@enderror
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
                             <label for="sandbox_client_secret">Sandbox client secret</label>
-                            <input type="text" name="sandbox_client_secret" value="{{ old('sandbox_client_secret', $payment_method->sandbox_client_secret) }}" class="form-control">
+                            <input type="text" name="sandbox_client_secret" value="{{ old('sandbox_client_secret', $payment_method->sandbox_secret) }}" class="form-control">
                             @error('sandbox_client_secret')<span class="text-danger">{{ $message }}</span>@enderror
                         </div>
                     </div>

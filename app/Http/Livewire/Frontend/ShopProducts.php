@@ -18,7 +18,7 @@ class ShopProducts extends Component
     public $slug;
     public $sortingBy = 'default';
     protected $optionsAlert = [
-        'timer' => 5000,
+        'timer' => 2000,
         'timerProgressBar' => true,
     ];
 

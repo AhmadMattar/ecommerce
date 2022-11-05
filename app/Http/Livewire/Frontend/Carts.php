@@ -15,7 +15,7 @@ class Carts extends Component
     public $wishlistCount;
 
     protected $optionsAlert = [
-        'timer' => 5000,
+        'timer' => 2000,
         'timerProgressBar' => true,
     ];
     protected $listeners = [

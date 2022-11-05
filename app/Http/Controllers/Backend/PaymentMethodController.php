@@ -106,12 +106,25 @@ class PaymentMethodController extends Controller
         if(!auth()->user()->ability('admin', 'update_payment_methods')){
             return redirect()->route('admin.index');
         }
-
-        $payment_method->update($request->validated());
+        
+        $payment_method->update([
+            'name'              => $request->name,
+            'code'              => $request->code,
+            'driver_name'       => $request->driver_name,
+            'merchant_email'    => $request->merchant_email,
+            'username'          => $request->username,
+            'password'          => $request->password,
+            'secret'            => $request->secret,
+            'sandbox_username'  => $request->sandbox_merchant_email,
+            'sandbox_password'  => $request->sandbox_client_id,
+            'sandbox_secret'    => $request->sandbox_client_secret,
+            'sandbox'           => $request->sandbox,
+            'status'            => $request->status,
+        ]);
 
         return redirect()->route('admin.payment_methods.index')->with([
-            'message' => 'Something wrong!',
-            'alert-type' => 'danger',
+            'message' => 'Updated successfully',
+            'alert-type' => 'success'
         ]);
     }
 

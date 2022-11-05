@@ -14,7 +14,7 @@ class CartItems extends Component
     public $item;
     public $item_quantity = 1;
     protected $optionsAlert = [
-        'timer' => 5000,
+        'timer' => 2000,
         'timerProgressBar' => true,
     ];
 

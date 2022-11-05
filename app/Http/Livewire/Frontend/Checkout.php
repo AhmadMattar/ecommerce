@@ -32,7 +32,7 @@ class Checkout extends Component
         'updateCart' => 'mount'
     ];
     protected $optionsAlert = [
-        'timer' => 5000,
+        'timer' => 2000,
         'timerProgressBar' => true,
     ];
 

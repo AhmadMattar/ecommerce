@@ -41,6 +41,10 @@ Route::prefix('')->group(function(){
 Route::middleware(['roles', 'role:customer'])->group(function(){
     Route::get('/checkout',[FrontendController::class, 'checkout'])->name('frontend.checkout');
     Route::post('/checkout',[PaymentController::class, 'checkout_now'])->name('frontend.checkout.payment');
+
+    Route::get('/checkout/{order_id}/canceled',[PaymentController::class, 'canceled'])->name('frontend.checkout.cancel');
+    Route::get('/checkout/{order_id}/completed',[PaymentController::class, 'completed'])->name('frontend.checkout.complete');
+    Route::get('/checkout/webhook/{order?}/{envi?}',[PaymentController::class, 'webhook'])->name('frontend.checkout.webhook.ipn');
 });
 Route::prefix('admin')->name('admin.')->group(function(){
     //guest middleware
