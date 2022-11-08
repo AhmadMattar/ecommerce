@@ -3,27 +3,41 @@
       <div class="card-body">
         <h5 class="text-uppercase mb-4">Cart total</h5>
         <ul class="list-unstyled mb-0">
-          <li class="d-flex align-items-center justify-content-between">
-              <strong class="text-uppercase small font-weight-bold">Subtotal</strong>
-              <span class="text-muted small">${{$cart_subtotal}}</span>
-          </li>
-          <li class="d-flex align-items-center justify-content-between">
-              <strong class="text-uppercase small font-weight-bold">Tax</strong>
-              <span class="text-muted small">${{$cart_tax}}</span>
-          </li>
-          <li class="border-bottom my-2"></li>
-          <li class="d-flex align-items-center justify-content-between mb-4">
-              <strong class="text-uppercase small font-weight-bold">Total</strong>
-              <span>${{$cart_total}}</span>
-          </li>
-          {{-- <li>
-            <form action="#">
-              <div class="form-group mb-0">
-                <input class="form-control" type="text" placeholder="Enter your coupon">
-                <button class="btn btn-dark btn-sm btn-block" type="submit"> <i class="fas fa-gift mr-2"></i>Apply coupon</button>
-              </div>
-            </form>
-          </li> --}}
+            @if($cart_total != 0)
+                <li class="border-bottom my-2"></li>
+                <li class="d-flex align-items-center justify-content-between">
+                    <strong class="text-uppercase small font-weight-bold">Subtotal</strong>
+                    <span class="text-muted small">${{$cart_subtotal}}</span>
+                </li>
+                <li class="border-bottom my-2"></li>
+                <li class="d-flex align-items-center justify-content-between">
+                    <strong class="text-uppercase small font-weight-bold">Tax</strong>
+                    <span class="text-muted small">${{$cart_tax}}</span>
+                </li>
+            @if(session()->has('coupon'))
+                    <li class="border-bottom my-2"></li>
+                    <li class="d-flex align-items-center justify-content-between">
+                    <strong class="small font-weight-bold">Discount <small>({{ getNumbers()->get('coupon_code') }})</small></strong>
+                    <span class="text-muted small">-${{ $cart_coupon }}</span>
+                </li>
+            @endif
+            @if(session()->has('shipping'))
+                    <li class="border-bottom my-2"></li>
+                    <li class="d-flex align-items-center justify-content-between">
+                        <strong class="small font-weight-bold">Shipping <small>({{ getNumbers()->get('shipping_code') }})</small></strong>
+                        <span class="text-muted small">${{ $cart_shipping }}</span>
+                    </li>
+            @endif
+                <li class="border-bottom my-2"></li>
+                <li class="d-flex align-items-center justify-content-between mb-4">
+                    <strong class="text-uppercase small font-weight-bold">Total</strong>
+                    <span>${{$cart_total}}</span>
+                </li>
+            @else
+                <li class="align-items-center justify-content-center mb-4">
+                    Your cart is empty
+                </li>
+            @endif
         </ul>
       </div>
     </div>

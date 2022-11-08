@@ -108,4 +108,8 @@ class Order extends Model
         }
         return $result;
     }
+
+    public function currency() {
+        return $this->currency == 'USD' ? '$' : $this->currency;
+    }
 }

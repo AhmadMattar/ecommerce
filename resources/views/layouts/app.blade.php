@@ -60,6 +60,11 @@
     </div>
     <livewire:frontend.product-modal-shared />
     <!-- Scripts -->
+    <livewire:scripts />
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <x-livewire-alert::scripts />
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    @include('sweetalert::alert', ['cdn' => "https://cdn.jsdelivr.net/npm/sweetalert2@9"])
     <script src="{{ asset('js/app.js') }}"></script>
     <!-- JavaScript files-->
     <script src="{{asset('frontend/vendor/lightbox2/js/lightbox.min.js')}}"></script>
@@ -74,30 +79,25 @@
       //   see more here
       //   https://css-tricks.com/ajaxing-svg-sprite/
       // ------------------------------------------------------ //
-      function injectSvgSprite(path) {
+    //   function injectSvgSprite(path) {
 
-          var ajax = new XMLHttpRequest();
-          ajax.open("GET", path, true);
-          ajax.send();
-          ajax.onload = function(e) {
-          var div = document.createElement("div");
-          div.className = 'd-none';
-          div.innerHTML = ajax.responseText;
-          document.body.insertBefore(div, document.body.childNodes[0]);
-          }
-      }
+    //       var ajax = new XMLHttpRequest();
+    //       ajax.open("GET", path, true);
+    //       ajax.send();
+    //       ajax.onload = function(e) {
+    //       var div = document.createElement("div");
+    //       div.className = 'd-none';
+    //       div.innerHTML = ajax.responseText;
+    //       document.body.insertBefore(div, document.body.childNodes[0]);
+    //       }
+    //   }
       // this is set to BootstrapTemple website as you cannot
       // inject local SVG sprite (using only 'icons/orion-svg-sprite.svg' path)
       // while using file:// protocol
       // pls don't forget to change to your domain :)
-      injectSvgSprite('https://bootstraptemple.com/files/icons/orion-svg-sprite.svg');
-
+    //   injectSvgSprite('https://bootstraptemple.com/files/icons/orion-svg-sprite.svg');
     </script>
-    <livewire:scripts />
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <x-livewire-alert::scripts />
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    @include('sweetalert::alert', ['cdn' => "https://cdn.jsdelivr.net/npm/sweetalert2@9"])
+
     @yield('script')
 </body>
 </html>

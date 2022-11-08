@@ -91,17 +91,22 @@
                     <li class="d-flex align-items-center justify-content-between">
                         <strong class="small font-weight-bold">Subtotal</strong>
                         <span class="text-muted small">${{ $cart_subtotal }}</span></li>
-                    <li class="border-bottom my-2">
 
                     @if (session()->has('coupon'))
-                        </li>
+                        <li class="border-bottom my-2"></li>
                         <li class="d-flex align-items-center justify-content-between">
-                            <strong class="small font-weight-bold">Discount <small>({{ session()->get('coupon')['code'] }})</small></strong>
+                            <strong class="small font-weight-bold">Discount <small>({{ getNumbers()->get('coupon_code') }})</small></strong>
                             <span class="text-muted small">- ${{ $cart_discount }}</span>
                         </li>
                     @endif
-
-                    </li>
+                    @if (session()->has('shipping'))
+                        <li class="border-bottom my-2"></li>
+                        <li class="d-flex align-items-center justify-content-between">
+                            <strong class="small font-weight-bold">Shipping <small>({{ getNumbers()->get('shipping_code') }})</small></strong>
+                            <span class="text-muted small"> ${{ $cart_shipping }}</span>
+                        </li>
+                    @endif
+                    <li class="border-bottom my-2"></li>
                     <li class="d-flex align-items-center justify-content-between">
                         <strong class="small font-weight-bold">Tax</strong>
                         <span class="text-muted small">${{ $cart_tax }}</span>

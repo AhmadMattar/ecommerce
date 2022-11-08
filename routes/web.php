@@ -17,6 +17,7 @@ use App\Http\Controllers\Backend\CustomerAddressController;
 use App\Http\Controllers\Backend\PaymentMethodController;
 use App\Http\Controllers\Backend\ShippingCompanyController;
 use App\Http\Controllers\Backend\ProductCategoriesController;
+use App\Http\Controllers\Frontend\CustomerController as FrontendCustomerController;
 use App\Http\Controllers\Frontend\PaymentController;
 
 /*
@@ -39,12 +40,20 @@ Route::prefix('')->group(function(){
 });
 
 Route::middleware(['roles', 'role:customer'])->group(function(){
-    Route::get('/checkout',[FrontendController::class, 'checkout'])->name('frontend.checkout');
-    Route::post('/checkout',[PaymentController::class, 'checkout_now'])->name('frontend.checkout.payment');
+    Route::get('profile', [FrontendCustomerController::class, 'profile'])->name('customer.profile');
+    Route::put('profile', [FrontendCustomerController::class, 'update_profile'])->name('customer.update_profile');
+    Route::get('profile/remove-image', [FrontendCustomerController::class, 'remove_profile_image'])->name('customer.remove_profile_image');
+    Route::get('profile/dashboard', [FrontendCustomerController::class, 'dashboard'])->name('customer.dashboard');
+    Route::get('profile/addresses', [FrontendCustomerController::class, 'addresses'])->name('customer.addresses');
+    Route::get('profile/orders', [FrontendCustomerController::class, 'orders'])->name('customer.orders');
 
-    Route::get('/checkout/{order_id}/canceled',[PaymentController::class, 'canceled'])->name('frontend.checkout.cancel');
-    Route::get('/checkout/{order_id}/completed',[PaymentController::class, 'completed'])->name('frontend.checkout.complete');
-    Route::get('/checkout/webhook/{order?}/{envi?}',[PaymentController::class, 'webhook'])->name('frontend.checkout.webhook.ipn');
+    Route::middleware('cart_check')->group(function (){
+        Route::get('/checkout',[FrontendController::class, 'checkout'])->name('frontend.checkout');
+        Route::post('/checkout',[PaymentController::class, 'checkout_now'])->name('frontend.checkout.payment');
+        Route::get('/checkout/{order_id}/canceled',[PaymentController::class, 'canceled'])->name('frontend.checkout.cancel');
+        Route::get('/checkout/{order_id}/completed',[PaymentController::class, 'completed'])->name('frontend.checkout.complete');
+        Route::get('/checkout/webhook/{order?}/{envi?}',[PaymentController::class, 'webhook'])->name('frontend.checkout.webhook.ipn');
+    });
 });
 Route::prefix('admin')->name('admin.')->group(function(){
     //guest middleware
