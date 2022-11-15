@@ -105,7 +105,7 @@
                                 @if ($loop->last && $transaction->transaction == \App\Models\OrderTransaction::FINISHED &&
                                     \Carbon\Carbon::now()->addDays(5)->diffInDays($transaction->created_at->format('Y-m-d')) != 0)
 
-                                    <button type="button" class="btn btn-link text-right">
+                                    <button type="button" wire:click="requestRefundedOrder('{{ $order->id }}')" class="btn btn-link text-right">
                                         you can return order in {{ 5 - $transaction->created_at->diffInDays() }} days
                                     </button>
                                 @endif

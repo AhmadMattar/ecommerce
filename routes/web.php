@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Backend\OrderController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\TagController;
@@ -85,7 +86,7 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::resource('customers', CustomerController::class);
 
         Route::resource('customer_addresses', CustomerAddressController::class);
-
+        Route::resource('orders', OrderController::class);
         Route::post('/supervisors/remove-image', [SupervisorController::class, 'remove_image'])->name('supervisors.remove_image');
         Route::resource('supervisors', SupervisorController::class);
 

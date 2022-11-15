@@ -49,8 +49,8 @@ class Order extends Model
     const REJECTED = 4;
     const CANCELED = 5;
     const REFUNDED_REQUEST = 6;
-    const REFUNDED = 7;
-    const RETURNED = 8;
+    const RETURNED = 7;
+    const REFUNDED = 8;
 
     public function user(): BelongsTo
     {
@@ -67,6 +67,11 @@ class Order extends Model
         return $this->belongsToMany(Product::class)->withPivot('quantity');
     }
 
+    public function shipping_company(): BelongsTo
+    {
+        return $this->belongsTo(ShippingCompany::class);
+    }
+
     public function payment_method(): BelongsTo
     {
         return $this->belongsTo(PaymentMethod::class);
@@ -79,7 +84,7 @@ class Order extends Model
 
     public function status()
     {
-        switch($this->status) {
+        switch($this->order_status) {
             case 0: $result = 'New order'; break;
             case 1: $result = 'Paid'; break;
             case 2: $result = 'Under process'; break;
@@ -87,8 +92,8 @@ class Order extends Model
             case 4: $result = 'Rejected'; break;
             case 5: $result = 'Canceled'; break;
             case 6: $result = 'Refund requested'; break;
-            case 7: $result = 'Refunded'; break;
-            case 8: $result = 'Refunded order'; break;
+            case 7: $result = 'Refunded order'; break;
+            case 8: $result = 'Refunded'; break;
         }
         return $result;
     }

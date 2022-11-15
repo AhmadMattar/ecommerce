@@ -130,8 +130,18 @@ class EntrustSeeder extends Seeder
         $updateCustomerAddresses = Permission::create(['name' => 'update_customer_addresses',    'display_name' => 'Update Addresses',  'route' => 'customer_addresses', 'module' => 'customer_addresses', 'as' => 'customer_addresses.edit',    'icon' => null,  'parent' => $manageCustomerAddresses->id,'parent_original' => $manageCustomerAddresses->id,'parent_show' => $manageCustomerAddresses->id,'sidebar_link' => '1','appear' => '0',]);
         $delteCustomerAddresses = Permission::create(['name' => 'delete_customer_addresses',     'display_name' => 'Delete Addresses',  'route' => 'customer_addresses', 'module' => 'customer_addresses', 'as' => 'customer_addresses.destroy', 'icon' => null,   'parent' => $manageCustomerAddresses->id,'parent_original' => $manageCustomerAddresses->id,'parent_show' => $manageCustomerAddresses->id,'sidebar_link' => '1','appear' => '0',]);
 
+        //Orders
+        $manageOrders = Permission::create(['name' => 'manage_orders', 'display_name' => 'Orders', 'route' => 'orders', 'module' => 'orders', 'as' => 'orders.index', 'icon' => 'fas fa-shopping-basket', 'parent' => '0', 'parent_original' => '0', 'sidebar_link' => '1', 'appear' => '1', 'ordering' => '40',]);
+        $manageOrders->parent_show = $manageOrders->id; $manageOrders->save();
+
+        $showOrders = Permission::create(['name' => 'show_orders', 'display_name' => 'Orders', 'route' => 'orders', 'module' => 'orders', 'as' => 'orders.index', 'icon' => 'fas fa-map-marked-alt', 'parent' => $manageOrders->id, 'parent_original' => $manageOrders->id, 'parent_show' => $manageOrders->id, 'sidebar_link' => '1', 'appear' => '1',]);
+        $createOrders = Permission::create(['name' => 'create_orders',    'display_name' => 'Create Orders',  'route' => 'orders', 'module' => 'orders', 'as' => 'orders.create',  'icon' => null, 'parent' => $manageOrders->id, 'parent_original' => $manageOrders->id, 'parent_show' => $manageOrders->id, 'sidebar_link' => '1', 'appear' => '0',]);
+        $displayOrders = Permission::create([ 'name' => 'display_orders', 'display_name' => 'Show Orders',    'route' => 'orders', 'module' => 'orders', 'as' => 'orders.show',    'icon' => null,   'parent' => $manageOrders->id, 'parent_original' => $manageOrders->id, 'parent_show' => $manageOrders->id, 'sidebar_link' => '1', 'appear' => '0',]);
+        $updateOrders = Permission::create(['name' => 'update_orders',    'display_name' => 'Update Orders',  'route' => 'orders', 'module' => 'orders', 'as' => 'orders.edit',    'icon' => null,  'parent' => $manageOrders->id,'parent_original' => $manageOrders->id,'parent_show' => $manageOrders->id,'sidebar_link' => '1','appear' => '0',]);
+        $delteOrders = Permission::create(['name' => 'delete_orders',     'display_name' => 'Delete Orders',  'route' => 'orders', 'module' => 'orders', 'as' => 'orders.destroy', 'icon' => null,   'parent' => $manageOrders->id,'parent_original' => $manageOrders->id,'parent_show' => $manageOrders->id,'sidebar_link' => '1','appear' => '0',]);
+
         //supervisors
-        $manageSupervisors = Permission::create(['name' => 'manage_supervisors', 'display_name' => 'Supervisors', 'route' => 'customers', 'module' => 'customers', 'as' => 'customers.index', 'icon' => 'fas fa-user', 'parent' => '0', 'parent_original' => '0', 'sidebar_link' => '0', 'appear' => '1', 'ordering' => '100',]);
+        $manageSupervisors = Permission::create(['name' => 'manage_supervisors', 'display_name' => 'Supervisors', 'route' => 'customers', 'module' => 'customers', 'as' => 'customers.index', 'icon' => 'fas fa-user', 'parent' => '0', 'parent_original' => '0', 'sidebar_link' => '0', 'appear' => '1', 'ordering' => '45',]);
         $manageSupervisors->parent_show = $manageSupervisors->id; $manageSupervisors->save();
 
         $showSupervisor = Permission::create(['name' => 'show_supervisors', 'display_name' => 'Supervisors', 'route' => 'supervisors', 'module' => 'supervisors', 'as' => 'supervisors.index', 'icon' => 'fas fa-user', 'parent' => $manageSupervisors->id, 'parent_original' => $manageSupervisors->id, 'parent_show' => $manageSupervisors->id, 'sidebar_link' => '1', 'appear' => '1',]);
@@ -141,7 +151,7 @@ class EntrustSeeder extends Seeder
         $delteSupervisor = Permission::create(['name' => 'delete_supervisors',     'display_name' => 'Delete Supervisor',  'route' => 'supervisors', 'module' => 'supervisors', 'as' => 'supervisors.destroy', 'icon' => null,   'parent' => $manageSupervisors->id,'parent_original' => $manageSupervisors->id,'parent_show' => $manageSupervisors->id,'sidebar_link' => '1','appear' => '0',]);
 
         //countries
-        $manageCountries = Permission::create(['name' => 'manage_countries', 'display_name' => 'Countries', 'route' => 'countries', 'module' => 'countries', 'as' => 'countries.index', 'icon' => 'fas fa-globe', 'parent' => '0', 'parent_original' => '0', 'sidebar_link' => '1', 'appear' => '1', 'ordering' => '40',]);
+        $manageCountries = Permission::create(['name' => 'manage_countries', 'display_name' => 'Countries', 'route' => 'countries', 'module' => 'countries', 'as' => 'countries.index', 'icon' => 'fas fa-globe', 'parent' => '0', 'parent_original' => '0', 'sidebar_link' => '1', 'appear' => '1', 'ordering' => '50',]);
         $manageCountries->parent_show = $manageCountries->id; $manageCountries->save();
 
         $showCountry = Permission::create(['name' => 'show_countries', 'display_name' => 'Countries', 'route' => 'countries', 'module' => 'countries', 'as' => 'countries.index', 'icon' => 'fas fa-globe', 'parent' => $manageCountries->id, 'parent_original' => $manageCountries->id, 'parent_show' => $manageCountries->id, 'sidebar_link' => '1', 'appear' => '1',]);
@@ -151,7 +161,7 @@ class EntrustSeeder extends Seeder
         $delteCountry = Permission::create(['name' => 'delete_countries',     'display_name' => 'Delete Country',  'route' => 'countries', 'module' => 'countries', 'as' => 'countries.destroy', 'icon' => null,   'parent' => $manageCountries->id,'parent_original' => $manageCountries->id,'parent_show' => $manageCountries->id,'sidebar_link' => '1','appear' => '0',]);
 
         //states
-        $manageStates = Permission::create(['name' => 'manage_states', 'display_name' => 'States', 'route' => 'states', 'module' => 'states', 'as' => 'states.index', 'icon' => 'fas fa-map-marker-alt', 'parent' => '0', 'parent_original' => '0', 'sidebar_link' => '1', 'appear' => '1', 'ordering' => '45',]);
+        $manageStates = Permission::create(['name' => 'manage_states', 'display_name' => 'States', 'route' => 'states', 'module' => 'states', 'as' => 'states.index', 'icon' => 'fas fa-map-marker-alt', 'parent' => '0', 'parent_original' => '0', 'sidebar_link' => '1', 'appear' => '1', 'ordering' => '55',]);
         $manageStates->parent_show = $manageStates->id; $manageStates->save();
 
         $showState = Permission::create(['name' => 'show_states', 'display_name' => 'States', 'route' => 'states', 'module' => 'states', 'as' => 'states.index', 'icon' => 'fas fa-map-marker-alt', 'parent' => $manageStates->id, 'parent_original' => $manageStates->id, 'parent_show' => $manageStates->id, 'sidebar_link' => '1', 'appear' => '1',]);
@@ -162,7 +172,7 @@ class EntrustSeeder extends Seeder
 
 
         //cities
-        $manageCities = Permission::create(['name' => 'manage_cities', 'display_name' => 'Cities', 'route' => 'cities', 'module' => 'cities', 'as' => 'cities.index', 'icon' => 'fas fa-city', 'parent' => '0', 'parent_original' => '0', 'sidebar_link' => '1', 'appear' => '1', 'ordering' => '50',]);
+        $manageCities = Permission::create(['name' => 'manage_cities', 'display_name' => 'Cities', 'route' => 'cities', 'module' => 'cities', 'as' => 'cities.index', 'icon' => 'fas fa-city', 'parent' => '0', 'parent_original' => '0', 'sidebar_link' => '1', 'appear' => '1', 'ordering' => '60',]);
         $manageCities->parent_show = $manageCities->id; $manageCities->save();
 
         $showCity = Permission::create(['name' => 'show_cities', 'display_name' => 'Cities', 'route' => 'cities', 'module' => 'cities', 'as' => 'cities.index', 'icon' => 'fas fa-city', 'parent' => $manageCities->id, 'parent_original' => $manageCities->id, 'parent_show' => $manageCities->id, 'sidebar_link' => '1', 'appear' => '1',]);

@@ -19,8 +19,8 @@ class OrderTransaction extends Model
     const REJECTED = 4;
     const CANCELED = 5;
     const REFUNDED_REQUEST = 6;
-    const REFUNDED = 7;
-    const RETURNED = 8;
+    const RETURNED = 7;
+    const REFUNDED = 8;
 
 
     public function order(): BelongsTo
@@ -39,8 +39,8 @@ class OrderTransaction extends Model
             case 4: $result = 'Rejected'; break;
             case 5: $result = 'Canceled'; break;
             case 6: $result = 'Refund requested'; break;
-            case 7: $result = 'Refunded'; break;
-            case 8: $result = 'Refunded order'; break;
+            case 7: $result = 'Refunded order'; break;
+            case 8: $result = 'Refunded'; break;
         }
         return $result;
     }

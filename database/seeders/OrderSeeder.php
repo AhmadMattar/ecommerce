@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class OrderSeeder extends Seeder
 {
@@ -43,11 +44,6 @@ class OrderSeeder extends Seeder
 
         // Create Order Products
         $order->products()->attach($products->pluck('id')->toArray());
-//        DB::table('order_product')->insert([
-//            'order_id'   => $order->id,
-//            'product_id' => $item->model->id,
-//            'quantity'   => $item->qty,
-//        ]);
 
         // Create Order Transactions
         $order->transactions()->createMany([
