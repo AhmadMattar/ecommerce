@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->unsignedTinyInteger('status')->default(0);
             $table->string('password');
             $table->rememberToken();
+            $table->boolean('receive_email')->default(true);
             $table->timestamps();
         });
     }

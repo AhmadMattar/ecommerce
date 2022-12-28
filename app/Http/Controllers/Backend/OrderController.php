@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderTransaction;
+use App\Models\User;
+use App\Notifications\Backend\Orders\OrderNotification;
 use App\Services\OmnipayService;
 use Illuminate\Http\Request;
 
@@ -114,24 +116,26 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
-        if(!auth()->user()->ability('admin', 'update_orders')){
+        if (!auth()->user()->ability('admin', 'update_orders')) {
             return redirect()->route('admin.index');
         }
 
-        if($request->order_status == Order::REFUNDED) {
+        $customer = User::find($order->user_id);
+
+        if ($request->order_status == Order::REFUNDED) {
 
             $omniPay = new OmnipayService('PayPal_Express');
 
             $response = $omniPay->refund([
-                'amount'        => $order->total,
+                'amount' => $order->total,
                 'transactionReference' => $order->transactions()->where('transaction', Order::PAYMNET_COMPLETE)
-                                            ->first()->transaction_number,
-                'cancelUrl'     => $omniPay->getCancelUrl($order->id),
-                'returnUrl'     => $omniPay->getReturnUrl($order->id),
-                'notifyUrl'     => $omniPay->getNotifyUrl($order->id),
+                    ->first()->transaction_number,
+                'cancelUrl' => $omniPay->getCancelUrl($order->id),
+                'returnUrl' => $omniPay->getReturnUrl($order->id),
+                'notifyUrl' => $omniPay->getNotifyUrl($order->id),
             ]);
 
-            if($response->isSuccessful()) {
+            if ($response->isSuccessful()) {
                 $order->update(['order_status' => Order::REFUNDED]);
                 $order->transactions()->create([
                     'transaction' => OrderTransaction::REFUNDED,
@@ -140,23 +144,33 @@ class OrderController extends Controller
                 ]);
             }
 
-            } else {
-                $order->update([
-                    'order_status' => $request->order_status,
-                ]);
+            $customer->notify(new OrderNotification($order));
 
-                $order->transactions()->create([
-                    'transaction' => $request->order_status,
-                    'transaction_number' => null,
-                    'payment_result' => null,
-                ]);
 
-                return back()->with([
-                    'message' => 'updated successfully',
-                    'alert-type' => 'success',
-                ]);
-            }
+            return back()->with([
+                'message' => 'refunded successfully',
+                'alert-type' => 'success',
+            ]);
+
+        } else {
+            $order->update([
+                'order_status' => $request->order_status,
+            ]);
+
+            $order->transactions()->create([
+                'transaction' => $request->order_status,
+                'transaction_number' => null,
+                'payment_result' => null,
+            ]);
+
+            $customer->notify(new OrderNotification($order));
+
+            return back()->with([
+                'message' => 'updated successfully',
+                'alert-type' => 'success',
+            ]);
         }
+    }
     /**
      * Remove the specified resource from storage.
      *

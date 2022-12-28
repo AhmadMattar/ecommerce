@@ -73,12 +73,12 @@ class Checkout extends Component
                     $this->emit('updateCart');
                     $this->alert('success', 'Coupon applied successfully.', $this->optionsAlert);
                 } else {
-                    $this->alert('error', 'Coupon is invaild!', $this->optionsAlert);
+                    $this->alert('error', 'Coupon is invalid!', $this->optionsAlert);
                 }
 
             } else {
                 $this->cart_coupon = '';
-                $this->alert('error', 'Coupon is invaild!', $this->optionsAlert);
+                $this->alert('error', 'Coupon is invalid!', $this->optionsAlert);
             }
         } else {
             $this->coupon_code = '';

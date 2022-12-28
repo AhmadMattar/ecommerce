@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\User;
+use App\Notifications\Frontend\Customer\OrderCreatedNotification;
+use App\Notifications\Frontend\Customer\OrderThanksNotification;
 use Illuminate\Http\Request;
 use App\Models\ProductCoupon;
 use App\Services\OrderService;
@@ -12,6 +15,7 @@ use App\Http\Controllers\Controller;
 use App\Models\OrderTransaction;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use RealRashid\SweetAlert\Facades\Alert;
+use Meneses\LaravelMpdf\Facades\LaravelMpdf as PDF;
 
 class PaymentController extends Controller
 {
@@ -29,11 +33,12 @@ class PaymentController extends Controller
             'returnUrl'     => $omniPay->getReturnUrl($order->id),
         ]);
 
+
         if($response->isRedirect()) {
             $response->redirect();
         }
 
-        Alert::toast($response->getMessage(),'success');
+        Alert::toast($response->getMessage(), 'success');
         return redirect()->route('frontend.index');
 
     }
@@ -53,7 +58,7 @@ class PaymentController extends Controller
             ]);
         });
 
-        Alert::toast('You have canceld your order payment!', 'error');
+        Alert::toast('You have canceled your order payment!', 'error');
         return redirect()->route('frontend.index');
     }
 
@@ -95,7 +100,28 @@ class PaymentController extends Controller
                 'shipping',
             ]);
 
-            Alert::toast('Your payment is successfull with refrence code: ' . $response->getTransactionReference(), 'success');
+            User::whereHas('roles', function ($query){
+                $query->whereIn('name', ['admin', 'SuperVisor']);
+            })->each(function ($admin, $key) use ($order){
+                $admin->notify(new OrderCreatedNotification($order));
+            });
+
+
+            //order details
+            $order1 = Order::with('products', 'user', 'payment_method')->find($order_id);
+            $order1['currency_symbol'] = $order1->currency == 'USD' ? '$' : $order1->currency;
+            $data = $order1->toArray();
+            $pdf = PDF::loadView('layouts.invoice', $data);
+
+            //save invoice file to storage path
+            $saved = storage_path('app/pdf/files/'. $data['ref_id'] . '.pdf');
+            $pdf->save($saved);
+
+            //notify customer by email
+            $customer = User::find($order->user_id);
+            $customer->notify(new OrderThanksNotification($order, $saved));
+
+            Alert::toast('Your payment is successfully with reference code: ' . $response->getTransactionReference(), 'success');
             return redirect()->route('frontend.index');
         }
     }

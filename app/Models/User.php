@@ -11,7 +11,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Mindscms\Entrust\Traits\EntrustUserWithPermissionsTrait;
 use Nicolaslopezj\Searchable\SearchableTrait;
 
-// (MustVerifyEmail) calss for send verify email
+// (MustVerifyEmail) class for send verify email
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable, SearchableTrait, EntrustUserWithPermissionsTrait;
@@ -62,6 +62,16 @@ class User extends Authenticatable implements MustVerifyEmail
             'users.mobile' => 10,
         ],
     ];
+
+    /**
+     * The channels the user receives notification broadcasts on.
+     *
+     * @return string
+     */
+    public function receivesBroadcastNotificationsOn(): string
+    {
+        return 'users.' . $this->id;
+    }
 
     public function getFullNameAttribute(): string
     {

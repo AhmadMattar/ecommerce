@@ -21,9 +21,9 @@
                         <td>{{ $order->ref_id }}</td>
                         <td>{{ $order->currency() . ' ' . number_format($order->total) }}</td>
                         <td>{!! $order->statusWithLabel() !!}</td>
-                        <td>{{ $order->created_at->format('d-m-Y') }}</td>
+                        <td>{{ $order->created_at->format('d-m-Y h:i') }}</td>
                         <td class="text-right">
-                            <button type="button" wire:click="displayOrder('{{$order->id}}')" class="btn btn-success btn-sm">
+                            <button type="button" wire:click="displayOrder('{{$order->id}}')" @click="showOrder = true" class="btn btn-success btn-sm">
                                 <i class="fa fa-eye"></i>
                             </button>
                         </td>

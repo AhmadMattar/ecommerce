@@ -54,7 +54,7 @@ class ProductCoupon extends Model
     public function checkGreaterThan($total)
     {
         return $this->greater_than != '' ?
-            ($total <= $this->greater_than) ? true : false :
+            ($total <= $this->greater_than) ? false : true :
             true;
     }
 

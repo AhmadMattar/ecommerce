@@ -37,21 +37,12 @@ class EntrustSeeder extends Seeder
         $customer = User::create([ 'first_name'  => 'Ahmed', 'last_name' =>  'Mattar', 'username' =>  'ahmed', 'email' => 'ahmed@gmail.com', 'email_verified_at' => now(), 'mobile' => '972598926699', 'user_image' => '', 'status' => 1, 'password' => bcrypt('123456789'), 'remember_token' => Str::random(10), ]);
         $customer->attachRole($customerRole);
 
-        for ($i = 0; $i < 21; $i++) {
-            $random_customer = User::create([
-                'first_name'  => $faker->firstName,
-                'last_name' =>  $faker->lastName,
-                'username' =>  $faker->userName,
-                'email' => $faker->unique()->safeEmail,
-                'email_verified_at' => now(),
-                'mobile' => '97259892' . $faker->unique()->numberBetween(1000, 9999),
-                'user_image' => '',
-                'status' => 1,
-                'password' => bcrypt('123456789'),
-                'remember_token' => Str::random(10),
-            ]);
-            $random_customer->attachRole($customerRole);
-        }
+        /*
+         * Create 1000 fake users with their addresses.
+         */
+
+        User::factory()->count(1000)->hasAddresses(1)->create();
+
 
         //create permissions
         $manageMain = Permission::create([ 'name' => 'main', 'display_name' => 'Main', 'route' => 'index', 'module' => 'index', 'as' => 'index', 'icon' => 'fas fa-home', 'parent' => '0', 'parent_original' => '0', 'sidebar_link' => '1', 'appear' => '1', 'ordering' => '1', ]);

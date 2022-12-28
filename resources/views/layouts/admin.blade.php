@@ -10,7 +10,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Favicon-->
-    <link rel="shortcut icon" href="{{asset('favicon3.png')}}">
+    <link rel="shortcut icon" href="{{asset('favicon2.ico')}}">
 
     <title>{{ config('app.name', 'Laravel') }} Dashboard</title>
 
@@ -28,6 +28,7 @@
     <link href="{{asset('backend/css/sb-admin-2.min.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('backend/vendor/bootstrap-input-file/css/fileinput.min.css')}}">
     <link rel="stylesheet" href="{{asset('backend/vendor/summernote/summernote-bs4.min.css')}}">
+    <livewire:styles />
     @yield('style')
 </head>
 <body id="page-top">
@@ -58,6 +59,7 @@
         @include('partiacl.backend.modal')
     </div>
     <!-- Scripts -->
+    <livewire:scripts />
     <script src="{{ asset('js/app.js') }}"></script>
     <!-- Core plugin JavaScript-->
     <script src="{{asset('backend/vendor/jquery-easing/jquery.easing.min.js')}}"></script>

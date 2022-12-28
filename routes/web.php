@@ -31,6 +31,22 @@ use App\Http\Controllers\Frontend\PaymentController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+//Route::get('/test-pdf', function (){
+//
+//    $order = Order::with('products', 'user', 'payment_method')->first();
+//    $order['currency_symbol'] = $order->currency == 'USD' ? '$' : $order->currency;
+//    $data = $order->toArray();
+//    $pdf = PDF::loadView('layouts.invoice', $data);
+//
+//    $saved = storage_path('app/pdf/files/'. $data['ref_id'] . '.pdf');
+//    $pdf->save($saved);
+//
+//    $customer = User::find($order->user_id);
+//    $customer->notify(new OrderThanksNotification($order, $saved));
+//
+//    return 'Email sent';
+//});
 Route::prefix('')->group(function(){
     Route::get('/',[FrontendController::class,'index'])->name('frontend.index');
     Route::get('/cart',[FrontendController::class,'cart'])->name('frontend.cart');
@@ -56,6 +72,8 @@ Route::middleware(['roles', 'role:customer'])->group(function(){
         Route::get('/checkout/webhook/{order?}/{envi?}',[PaymentController::class, 'webhook'])->name('frontend.checkout.webhook.ipn');
     });
 });
+
+
 Route::prefix('admin')->name('admin.')->group(function(){
     //guest middleware
     Route::middleware(['guest'])->group(function () {

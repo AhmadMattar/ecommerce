@@ -2,7 +2,7 @@
     <div class="d-flex">
         <h2 class="h5 text-uppercase mb-4">Addresses</h2>
         <div class="ml-auto">
-            <button type="button" x-on:click="showForm = true" class="btn btn-primary rounded shadow">Add new address</button>
+            <button type="button" @click="showForm = true" class="btn btn-primary rounded shadow">Add new address</button>
         </div>
     </div>
 
